@@ -110,7 +110,8 @@ export const sendToMockGPT = async (message) => {
   }
 
   const mockResponses = {
-    'hello': `Hello! I am an AI assistant for the portfolio of **${profile.name}**. I can provide information about their skills, projects, and professional background. How may I assist you?`,
+    'hii': 'hii hello how are you',
+    'hello': 'hii hello how are you',
     'default': `I apologize, but I am unable to answer that question at this time. I can provide information about **${profile.name}**'s summary, skills, projects, education, or contact details.`
   }
 
