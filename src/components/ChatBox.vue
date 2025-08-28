@@ -33,6 +33,8 @@
           :class="['message', message.type]"
         >
           <div class="message-content">
+
+
             <div v-if="message.type === 'bot'" class="message-avatar">
               <q-icon name="smart_toy" />
             </div>

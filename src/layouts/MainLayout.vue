@@ -48,7 +48,7 @@
           </div>
           <!-- ...other sections... -->
         </div>
-        <ChatBox />
+        <ChatBox v-if="true" />
       </q-page-container>
     </div>
   </q-layout>
