@@ -48,6 +48,7 @@
           </div>
           <!-- ...other sections... -->
         </div>
+        <ChatBox />
       </q-page-container>
     </div>
   </q-layout>
@@ -63,6 +64,7 @@ import ServicesSection from 'components/ServicesSection.vue'
 import LanguageSelector from 'components/LanguageSelector.vue'
 import DownloadResume from 'components/DownloadResume.vue'
 import ContactSection from 'components/ContactSection.vue'
+import ChatBox from 'components/ChatBox.vue'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -74,7 +76,8 @@ export default defineComponent({
     ServicesSection,
     LanguageSelector,
     DownloadResume,
-    ContactSection
+    ContactSection,
+    ChatBox
   },
   setup() {
     const leftDrawerOpen = ref(true)
