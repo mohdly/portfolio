@@ -78,7 +78,7 @@
 
 <script>
 import { ref, nextTick } from 'vue'
-import { sendToMockGPT } from 'src/services/gptService'
+import { sendToGPT } from 'src/services/gptService'
 
 export default {
   name: 'ChatBox',
@@ -127,7 +127,7 @@ export default {
       isTyping.value = true
 
       try {
-        const response = await sendToMockGPT(currentInput)
+        const response = await sendToGPT(currentInput, messages.value)
 
         isTyping.value = false
         messages.value.push({
