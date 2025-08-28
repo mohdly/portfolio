@@ -51,18 +51,43 @@ export const sendToGPT = async (message, conversationHistory = []) => {
   }
 }
 
+import { profile } from '../data/profileData.js'
+
 // Mock service for development/testing without API key
 export const sendToMockGPT = async (message) => {
+  const lowerMessage = message.toLowerCase()
+
+  if (lowerMessage.includes('name')) {
+    return `The name of the portfolio owner is ${profile.name}.`
+  }
+
+  if (lowerMessage.includes('title')) {
+    return `${profile.name}'s title is ${profile.title}.`
+  }
+
+  if (lowerMessage.includes('contact')) {
+    let response = 'You can contact them via:'
+    profile.contacts.forEach(contact => {
+      response += `\n- ${contact.label}: ${contact.value}`
+    })
+    return response
+  }
+
+  if (lowerMessage.includes('socials')) {
+    let response = 'You can find them on:'
+    profile.socials.forEach(social => {
+      response += `\n- ${social.name}: ${social.url}`
+    })
+    return response
+  }
+
   const mockResponses = {
-    'hello': 'Hello! Welcome to this portfolio. How can I assist you today?',
+    'hello': `Hello! I'm an AI assistant for ${profile.name}'s portfolio. How can I help you?`,
     'projects': 'This portfolio showcases several impressive projects including web applications, mobile apps, and data visualization tools. Would you like details about any specific project?',
     'skills': 'The portfolio owner has expertise in JavaScript, Vue.js, React, Node.js, Python, and various other technologies. They also have experience with cloud platforms and DevOps practices.',
     'experience': 'With several years of experience in full-stack development, the portfolio owner has worked on diverse projects from startups to enterprise solutions.',
-    'contact': 'You can reach out through the contact form or connect via LinkedIn. The portfolio owner is always open to discussing new opportunities!',
-    'default': 'Thanks for your question! I\'m here to help you learn more about this portfolio and the person behind it.'
+    'default': `I'm sorry, I can't answer that question right now. You can ask me about ${profile.name}'s skills, projects, or contact information.`
   }
-
-  const lowerMessage = message.toLowerCase()
 
   for (const [key, response] of Object.entries(mockResponses)) {
     if (lowerMessage.includes(key)) {
