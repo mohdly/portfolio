@@ -58,60 +58,60 @@ export const sendToMockGPT = async (message) => {
   const lowerMessage = message.toLowerCase()
 
   if (lowerMessage.includes('name')) {
-    return `The name of the portfolio owner is ${profile.name}.`
+    return `The portfolio belongs to **${profile.name}**.`
   }
 
   if (lowerMessage.includes('title')) {
-    return `${profile.name}'s title is ${profile.title}.`
+    return `**${profile.name}** is a **${profile.title}**.`
   }
 
   if (lowerMessage.includes('summary')) {
-    return profile.summary;
+    return `Here is a summary of **${profile.name}**'s profile:\n\n${profile.summary}`;
   }
 
   if (lowerMessage.includes('contact')) {
-    let response = 'You can contact them via:'
+    let response = 'You can contact **' + profile.name + '** through the following channels:\n\n'
     profile.contacts.forEach(contact => {
-      response += `\n- ${contact.label}: ${contact.value}`
+      response += `*   **${contact.label}:** ${contact.value}\n`
     })
     return response
   }
 
   if (lowerMessage.includes('socials')) {
-    let response = 'You can find them on:'
+    let response = 'You can find **' + profile.name + '** on the following platforms:\n\n'
     profile.socials.forEach(social => {
-      response += `\n- ${social.name}: ${social.url}`
+      response += `*   **${social.name}:** [${social.url}](${social.url})\n`
     })
     return response
   }
 
   if (lowerMessage.includes('skill')) {
-    let response = 'Their skills include:'
+    let response = 'Here is a breakdown of **' + profile.name + '**\'s skills:\n\n'
     for (const [category, skills] of Object.entries(profile.skills)) {
-      response += `\n- ${category}: ${Array.isArray(skills) ? skills.join(', ') : skills}`
+      response += `*   **${category}:** ${Array.isArray(skills) ? skills.join(', ') : skills}\n`
     }
     return response
   }
 
   if (lowerMessage.includes('project')) {
-    let response = 'Here are some of their projects:'
+    let response = 'Here are some of the projects **' + profile.name + '** has worked on:\n\n'
     profile.projects.forEach(project => {
-      response += `\n- ${project.name}: ${project.description}`
+      response += `*   **${project.name}:** ${project.description}\n`
     })
     return response
   }
 
   if (lowerMessage.includes('education')) {
-    let response = 'Here is their education background:'
+    let response = 'Here is **' + profile.name + '**\'s educational background:\n\n'
     profile.education.forEach(edu => {
-      response += `\n- ${edu.degree} from ${edu.institution} (${edu.period})`
+      response += `*   **${edu.degree}** from ${edu.institution} (${edu.period})\n`
     })
     return response
   }
 
   const mockResponses = {
-    'hello': `Hello! I'm an AI assistant for ${profile.name}'s portfolio. How can I help you?`,
-    'default': `I'm sorry, I can't answer that question right now. You can ask me about ${profile.name}'s summary, skills, projects, education, or contact information.`
+    'hello': `Hello! I am an AI assistant for the portfolio of **${profile.name}**. I can provide information about their skills, projects, and professional background. How may I assist you?`,
+    'default': `I apologize, but I am unable to answer that question at this time. I can provide information about **${profile.name}**'s summary, skills, projects, education, or contact details.`
   }
 
   for (const [key, response] of Object.entries(mockResponses)) {
