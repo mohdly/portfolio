@@ -6,10 +6,7 @@ const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-
 
 export const sendToGPT = async (message, conversationHistory = []) => {
   try {
-    const messages = [
-      {
-        role: 'user',
-        parts: [{ text: `You are a sophisticated AI assistant for the portfolio of Mohammad Sinan Ali, a Software Developer. Your role is to provide visitors with a comprehensive understanding of his skills, projects, and professional background.
+    const systemInstruction = `You are a sophisticated AI assistant for the portfolio of Mohammad Sinan Ali, a Software Developer. Your role is to provide visitors with a comprehensive understanding of his skills, projects, and professional background.
 
 Your communication style should be:
 - **Professional and Formal:** Maintain a respectful and formal tone at all times.
@@ -33,21 +30,35 @@ Socials: ${JSON.stringify(profile.socials)}
 Skills: ${JSON.stringify(profile.skills)}
 Projects: ${JSON.stringify(profile.projects)}
 Education: ${JSON.stringify(profile.education)}
-` }]
-      },
-      {
+`
+
+    const messages = []
+
+    // Add system instruction as part of the first user message
+    if (conversationHistory.length === 0) {
+      messages.push({
+        role: 'user',
+        parts: [{ text: systemInstruction + '\n\n' + message }]
+      });
+      messages.push({
         role: 'model',
         parts: [{ text: 'Understood. I will provide comprehensive and structured responses based on the provided portfolio data, maintaining a professional and engaging tone.' }]
-      },
-      ...conversationHistory.map(msg => ({
-        role: msg.type === 'user' ? 'user' : 'model',
-        parts: [{ text: msg.text }]
-      })),
-      {
+      });
+    } else {
+      // Add previous conversation history
+      conversationHistory.forEach(msg => {
+        messages.push({
+          role: msg.type === 'user' ? 'user' : 'model',
+          parts: [{ text: msg.text }]
+        });
+      });
+      // Add the current user message
+      messages.push({
         role: 'user',
         parts: [{ text: message }]
-      }
-    ]
+      });
+    }
+
 
     const response = await axios.post(
       API_URL,
