@@ -1,16 +1,16 @@
 <template>
-  <q-layout view="hHh LpR fFf" class="bg-dark">
+  <q-layout view="hHh lpR fFf" class="bg-dark">
     <q-header elevated class="bg-dark text-white" height-hint="64">
       <q-toolbar>
         <q-toolbar-title class="text-bold">PORTFOLIO</q-toolbar-title>
         <div class="q-gutter-x-md">
-        <q-btn
-          :label="isBuilderMode ? 'View Portfolio' : 'Builder Mode'"
-          :color="isBuilderMode ? 'yellow' : 'primary'"
-          :text-color="isBuilderMode ? 'black' : 'white'"
-          @click="toggleMode"
-        />
-        <DownloadResume class="q-ml-md" />
+          <q-btn
+            :label="isBuilderMode ? 'View Portfolio' : 'Builder Mode'"
+            :color="isBuilderMode ? 'yellow' : 'primary'"
+            :text-color="isBuilderMode ? 'black' : 'white'"
+            @click="toggleMode"
+          />
+          <DownloadResume class="q-ml-md" />
         </div>
         <div class="nav-links" v-if="!isBuilderMode">
           <q-btn flat label="About" class="nav-link" :class="{ active: activeSection === 'about' }" @click="scrollToSection('about')" />
@@ -28,7 +28,14 @@
 
     <!-- Regular Portfolio Mode -->
     <div v-else>
-      <q-drawer v-model="leftDrawerOpen" show-if-above side="left" bordered class="bg-dark" :width="300">
+      <q-drawer
+        v-model="leftDrawerOpen"
+        show-if-above
+        side="left"
+        bordered
+        :width="300"
+        class="bg-dark"
+      >
         <ProfileSidebar />
       </q-drawer>
 
@@ -46,7 +53,6 @@
           <div id="contact" class="section">
             <ContactSection />
           </div>
-          <!-- ...other sections... -->
         </div>
       </q-page-container>
     </div>
@@ -126,12 +132,14 @@ export default defineComponent({
 }
 
 .main-content {
+  margin-left: 300px;
   min-height: calc(100vh - 64px);
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 900px;
-  margin: 0 auto;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .nav-links {
@@ -163,18 +171,9 @@ export default defineComponent({
   border-bottom: none;
 }
 
-.services-list {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-.service-item {
-  background: #232323;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-}
-.text-yellow {
-  color: #ffc107;
+@media (max-width: 1023px) {
+  .main-content {
+    margin-left: 0;
+  }
 }
 </style>

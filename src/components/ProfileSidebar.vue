@@ -66,7 +66,6 @@ export default {
 <style scoped>
 .profile-sidebar {
   background: #1a1a1a !important;
-  min-height: 100vh;
   border-right: 1px solid #333;
 }
 
