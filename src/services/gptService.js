@@ -65,6 +65,10 @@ export const sendToMockGPT = async (message) => {
     return `${profile.name}'s title is ${profile.title}.`
   }
 
+  if (lowerMessage.includes('summary')) {
+    return profile.summary;
+  }
+
   if (lowerMessage.includes('contact')) {
     let response = 'You can contact them via:'
     profile.contacts.forEach(contact => {
@@ -81,12 +85,33 @@ export const sendToMockGPT = async (message) => {
     return response
   }
 
+  if (lowerMessage.includes('skill')) {
+    let response = 'Their skills include:'
+    for (const [category, skills] of Object.entries(profile.skills)) {
+      response += `\n- ${category}: ${Array.isArray(skills) ? skills.join(', ') : skills}`
+    }
+    return response
+  }
+
+  if (lowerMessage.includes('project')) {
+    let response = 'Here are some of their projects:'
+    profile.projects.forEach(project => {
+      response += `\n- ${project.name}: ${project.description}`
+    })
+    return response
+  }
+
+  if (lowerMessage.includes('education')) {
+    let response = 'Here is their education background:'
+    profile.education.forEach(edu => {
+      response += `\n- ${edu.degree} from ${edu.institution} (${edu.period})`
+    })
+    return response
+  }
+
   const mockResponses = {
     'hello': `Hello! I'm an AI assistant for ${profile.name}'s portfolio. How can I help you?`,
-    'projects': 'This portfolio showcases several impressive projects including web applications, mobile apps, and data visualization tools. Would you like details about any specific project?',
-    'skills': 'The portfolio owner has expertise in JavaScript, Vue.js, React, Node.js, Python, and various other technologies. They also have experience with cloud platforms and DevOps practices.',
-    'experience': 'With several years of experience in full-stack development, the portfolio owner has worked on diverse projects from startups to enterprise solutions.',
-    'default': `I'm sorry, I can't answer that question right now. You can ask me about ${profile.name}'s skills, projects, or contact information.`
+    'default': `I'm sorry, I can't answer that question right now. You can ask me about ${profile.name}'s summary, skills, projects, education, or contact information.`
   }
 
   for (const [key, response] of Object.entries(mockResponses)) {
